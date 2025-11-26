@@ -1,0 +1,215 @@
+.postcard-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: #7b68b8;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.canvas {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  cursor: default;
+  user-select: none;
+}
+
+.postcard-border {
+  width: 800px;
+  height: 500px;
+  background: white;
+  border: 12px solid transparent;
+  border-image: repeating-linear-gradient(
+    45deg,
+    #ff9eb5,
+    #ff9eb5 10px,
+    #b3e5fc 10px,
+    #b3e5fc 20px,
+    #ffd1dc 20px,
+    #ffd1dc 30px
+  ) 12;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.postcard-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.postcard-left {
+  flex: 1;
+  background: white;
+}
+
+.postcard-divider {
+  width: 1px;
+  background: #ddd;
+  margin: 20px 0;
+}
+
+.postcard-right {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stamp-placeholder {
+  width: 120px;
+  height: 90px;
+  border: 2px dashed #ddd;
+  align-self: flex-end;
+  margin-bottom: 20px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    #f9f9f9 5px,
+    #f9f9f9 10px
+  );
+}
+
+.address-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.address-line {
+  height: 1px;
+  background: #e0e0e0;
+  width: 100%;
+}
+
+.text-label {
+  position: absolute;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: move;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.text-label:hover {
+  border-color: #7b68b8;
+  box-shadow: 0 4px 12px rgba(123, 104, 184, 0.2);
+}
+
+.text-label.selected {
+  border-color: #7b68b8;
+  border-width: 2px;
+  box-shadow: 0 0 0 2px rgba(123, 104, 184, 0.3), 0 4px 12px rgba(123, 104, 184, 0.3);
+}
+
+.text-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  min-width: 150px;
+}
+
+.mark-wrapper {
+  position: absolute;
+  cursor: move;
+  z-index: 10;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.mark-wrapper:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.mark-wrapper.selected {
+  border-color: #7b68b8;
+  box-shadow: 0 0 0 2px rgba(123, 104, 184, 0.3);
+  background: rgba(123, 104, 184, 0.05);
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.mark.heart {
+  color: #e91e63;
+}
+
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  align-self: center;
+}
+
+.toolbar-button {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.toolbar-button:hover {
+  border-color: #7b68b8;
+  background: #f5f0ff;
+  transform: scale(1.05);
+}
+
+.toolbar-button.active {
+  border-color: #7b68b8;
+  background: #7b68b8;
+  color: white;
+}
+
+.toolbar-button:active {
+  transform: scale(0.95);
+}

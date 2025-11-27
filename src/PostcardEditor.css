@@ -15,6 +15,7 @@
 .header {
   text-align: center;
   margin-bottom: 2rem;
+  align-self: center;
 }
 
 .header h1 {
@@ -26,6 +27,8 @@
 
 .header p {
   font-size: 1rem;
+  font-weight: 300;
+  width: 35vw;
   color: rgba(99, 99, 153, 1);
   margin: 0;
 }
@@ -63,10 +66,11 @@
   border: 10px solid transparent;
   background-clip: padding-box, border-box;
   background-origin: border-box;
-  border-radius: 10px;
+  border-radius: 14px;
   box-shadow: 2px 2px 8px rgba(126, 126, 190, 0.15);
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden
 }
 
 .postcard-content {
@@ -89,33 +93,29 @@
 .postcard-right {
   flex: 1;
   background: var(--postcard-bg);
-  padding: 20px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
 }
 
 .stamp-placeholder {
-  width: 120px;
-  height: 90px;
-  border: 2px dashed rgba(126, 126, 190, 0.3);
+
+  width: 224px;
+  height: 166px;
   align-self: flex-end;
-  margin-bottom: 20px;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 5px,
-    #f9f9f9 5px,
-    #f9f9f9 10px
-  );
+  /* margin-bottom: 20px; */
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .address-lines {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 50px;
-  padding: 20px;
+  padding-bottom: 20px;
+
 }
 
 .address-line {
@@ -160,7 +160,7 @@
   cursor: move;
   z-index: 10;
   padding: 5px;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
   border-radius: 4px;
   transition: all 0.2s ease;
 }
@@ -182,49 +182,134 @@
   pointer-events: none;
 }
 
-.mark.heart {
-  color: #e91e63;
+.mark-icon {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .toolbar {
+  position: relative;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
-  background: white;
-  border-radius: 50px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+padding: 0 1rem;
+  height: 66px;
+  border-radius: 20px;
+  background: #FBFCFF;
+  box-shadow: 0 4px 20px 0 rgba(26, 46, 160, 0.10);
   align-self: center;
 }
 
 .toolbar-button {
-  width: 50px;
-  height: 50px;
-  border: 2px solid rgba(126, 126, 190, 0.3);
-  background: white;
-  border-radius: 50%;
-  font-size: 24px;
+  /* width: 50px;
+  height: 50px; */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
   color: #333;
+  align-self: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+.toolbar-icon {
+  width: 42px;
+  height: 34px;
+  display: block;
+  pointer-events: none;
 }
 
 .toolbar-button:hover {
-  border-color: #7b68b8;
-  background: #f5f0ff;
   transform: scale(1.05);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
 }
 
+.toolbar-button:focus-visible,
 .toolbar-button.active {
-  border-color: #7b68b8;
-  background: #7b68b8;
-  color: white;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
 
 .toolbar-button:active {
   transform: scale(0.95);
 }
+
+.font-picker {
+  position: static;
+}
+
+.font-dropdown {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  background: white;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: 0 4px 20px 0 rgba(26, 46, 160, 0.10);
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  z-index: 20;
+}
+
+.mark-picker {
+  position: relative;
+}
+
+.mark-dropdown {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  min-height: 32px;
+  background: #FFF;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px 0 rgba(26, 46, 160, 0.10);
+  padding: 0.5rem;
+  z-index: 20;
+}
+
+.font-dropdown-item {
+  border: none;
+  background: transparent;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.font-dropdown-item:hover {
+  border-radius: 10px;
+  border: 1px dashed rgba(126, 126, 190, 0.40);
+  background: rgba(126, 126, 190, 0.05);
+}
+
+.font-option-name {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DragEvent as ReactDragEvent, MouseEvent as ReactMouseEvent } from 'react'
+import html2canvas from 'html2canvas'
 import stampEmpty from './assets/stamp-empty.svg'
 import iconToolbarSticker from './assets/icon-toolbar-sticker.svg'
 import iconToolbarStamp from './assets/icon-toolbar-stamp.svg'
 import iconToolbarText from './assets/icon-toolbar-text.svg'
+import iconDownload from './assets/icon-download.svg'
 import stampChoco from './assets/stamps/stamp-choco.svg'
 import stampChristmas from './assets/stamps/stamp-christmas.svg'
 import stampCloud from './assets/stamps/stamp-cloud.svg'
@@ -367,6 +369,36 @@ function PostcardEditor() {
     setSelectedWidget(null)
   }
 
+  const handleDownload = async () => {
+    const postcardBorder = document.querySelector('.postcard-border') as HTMLElement
+    if (!postcardBorder) return
+
+    try {
+      const canvas = await html2canvas(postcardBorder, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        allowTaint: true,
+        onclone: (clonedDoc) => {
+          // Ensure the border is visible in the cloned document
+          const clonedBorder = clonedDoc.querySelector('.postcard-border') as HTMLElement
+          if (clonedBorder) {
+            // Force the border to be visible
+            clonedBorder.style.boxShadow = '2px 2px 8px rgba(126, 126, 190, 0.15)'
+          }
+        }
+      })
+      const url = canvas.toDataURL('image/png')
+      const link = document.createElement('a')
+      link.download = 'postcard.png'
+      link.href = url
+      link.click()
+    } catch (error) {
+      console.error('Failed to download postcard:', error)
+    }
+  }
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Check for Delete (Windows/Linux) or Backspace (Mac Delete key)
@@ -419,6 +451,16 @@ function PostcardEditor() {
       <div className="header">
         <h1>Postcard Builder</h1>
         <p>Create a beautiful postcard, add your message, and share it with someone special</p>
+        <button
+          type="button"
+          className="download-button"
+          onClick={handleDownload}
+          title="Download postcard"
+          aria-label="Download postcard"
+        >
+          <img src={iconDownload} alt="" className="download-icon" />
+          <span>Download</span>
+        </button>
       </div>
 
       <div

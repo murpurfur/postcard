@@ -46,7 +46,7 @@ interface Mark {
 
 const markIconMeta: Record<Mark['type'], { src: string; label: string }> = {
   sticker: { src: iconToolbarSticker, label: 'Sticker' },
-  stamp: { src: iconToolbarStamp, label: 'Stamp' }
+  stamp: { src: iconToolbarStamp, label: 'Stamp' },
 }
 
 interface DragState {
@@ -545,114 +545,116 @@ function PostcardEditor() {
           </div>
         ))}
       </div>
+      <div className="toolbar-container">
+        <div className="toolbar">
+          <div className="font-picker" ref={fontPickerRef}>
+            <button
+              type="button"
+              className={`toolbar-button ${isFontMenuOpen ? 'active' : ''}`}
+              onClick={(e) => {
+                e.stopPropagation()
+                setFontMenuOpen(open => !open)
+              }}
+              title="Add text"
+              aria-label="Add text"
+            >
+              <img src={iconToolbarText} alt="" className="toolbar-icon" />
+            </button>
+            {isFontMenuOpen && (
+              <div className="font-dropdown">
+                {fontOptions.map(option => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="font-dropdown-item"
+                    onClick={() => handleFontOptionSelect(option)}
+                    draggable
+                    onDragStart={(event) => handleFontDragStart(option, event)}
+                  >
+                    <span className="font-option-name" style={{ fontFamily: option.family }}>
+                      {option.sampleText}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="mark-picker">
+            <button
+              ref={stampButtonRef}
+              className={`toolbar-button ${selectedMarkType === 'stamp' ? 'active' : ''}`}
+              onClick={(event) => {
+                event.stopPropagation()
+                setStampDropdownOpen(prev => {
+                  const next = !prev
+                  setSelectedMarkType(next ? 'stamp' : 'sticker')
+                  return next
+                })
+              }}
+              title="Select stamp"
+              aria-label="Select stamp"
+            >
+              <img src={iconToolbarStamp} alt="" className="toolbar-icon" />
+            </button>
+            {stampDropdownOpen && (
+              <div className="stamp-dropdown" ref={stampDropdownRef} aria-hidden="true">
+                {stampOptions.map(option => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="stamp-option"
+                    onClick={() => handleStampSelect(option)}
+                    aria-label={option.label}
+                  >
+                    <img src={option.src} alt={option.label} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="mark-picker">
+            <button
+              className={`toolbar-button ${stickerDropdownOpen ? 'active' : ''}`}
+              onClick={(event) => {
+                event.stopPropagation()
+                setStickerDropdownOpen(prev => !prev)
+              }}
+              title="Add sticker"
+              aria-label="Add sticker"
+            >
+              <img src={iconToolbarSticker} alt="" className="toolbar-icon" />
+            </button>
+            {stickerDropdownOpen && (
+              <div className="sticker-dropdown" ref={stickerDropdownRef} aria-hidden="true">
+                {stickerOptions.map(option => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="sticker-option"
+                    onClick={() => handleStickerSelect(option)}
+                    draggable
+                    onDragStart={(event) => {
+                      event.dataTransfer?.setData('application/json', JSON.stringify({
+                        type: 'sticker',
+                        src: option.src
+                      }))
+                      event.dataTransfer.effectAllowed = 'copy'
+                      setStickerDropdownOpen(false)
+                    }}
+                    aria-label={option.label}
+                  >
+                    <img src={option.src} alt={option.label} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="footer">
+         <img src={madeInMatter} alt="Made in Matter" className="made-in-matter" />
+        </div>  
+      </div>
 
-      <div className="toolbar">
-        <div className="font-picker" ref={fontPickerRef}>
-          <button
-            type="button"
-            className={`toolbar-button ${isFontMenuOpen ? 'active' : ''}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              setFontMenuOpen(open => !open)
-            }}
-            title="Add text"
-            aria-label="Add text"
-          >
-            <img src={iconToolbarText} alt="" className="toolbar-icon" />
-          </button>
-          {isFontMenuOpen && (
-            <div className="font-dropdown">
-              {fontOptions.map(option => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className="font-dropdown-item"
-                  onClick={() => handleFontOptionSelect(option)}
-                  draggable
-                  onDragStart={(event) => handleFontDragStart(option, event)}
-                >
-                  <span className="font-option-name" style={{ fontFamily: option.family }}>
-                    {option.sampleText}
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="mark-picker">
-          <button
-            ref={stampButtonRef}
-            className={`toolbar-button ${selectedMarkType === 'stamp' ? 'active' : ''}`}
-            onClick={(event) => {
-              event.stopPropagation()
-              setStampDropdownOpen(prev => {
-                const next = !prev
-                setSelectedMarkType(next ? 'stamp' : 'sticker')
-                return next
-              })
-            }}
-            title="Select stamp"
-            aria-label="Select stamp"
-          >
-            <img src={iconToolbarStamp} alt="" className="toolbar-icon" />
-          </button>
-          {stampDropdownOpen && (
-            <div className="stamp-dropdown" ref={stampDropdownRef} aria-hidden="true">
-              {stampOptions.map(option => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className="stamp-option"
-                  onClick={() => handleStampSelect(option)}
-                  aria-label={option.label}
-                >
-                  <img src={option.src} alt={option.label} />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="mark-picker">
-          <button
-            className={`toolbar-button ${stickerDropdownOpen ? 'active' : ''}`}
-            onClick={(event) => {
-              event.stopPropagation()
-              setStickerDropdownOpen(prev => !prev)
-            }}
-            title="Add sticker"
-            aria-label="Add sticker"
-          >
-            <img src={iconToolbarSticker} alt="" className="toolbar-icon" />
-          </button>
-          {stickerDropdownOpen && (
-            <div className="sticker-dropdown" ref={stickerDropdownRef} aria-hidden="true">
-              {stickerOptions.map(option => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className="sticker-option"
-                  onClick={() => handleStickerSelect(option)}
-                  draggable
-                  onDragStart={(event) => {
-                    event.dataTransfer?.setData('application/json', JSON.stringify({
-                      type: 'sticker',
-                      src: option.src
-                    }))
-                    event.dataTransfer.effectAllowed = 'copy'
-                    setStickerDropdownOpen(false)
-                  }}
-                  aria-label={option.label}
-                >
-                  <img src={option.src} alt={option.label} />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="footer">
-        <img src={madeInMatter} alt="Made in Matter" className="made-in-matter" />
-      </div>
     </div>
   )
 }

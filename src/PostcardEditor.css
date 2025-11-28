@@ -1,7 +1,7 @@
 .postcard-editor {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100vw;
   background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
   padding: 2rem 2rem 0 2rem;
@@ -19,7 +19,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   align-self: center;
   padding: 0.5rem 1rem;
   border-radius: 12px;
@@ -27,7 +27,7 @@
 }
 
 .header h1 {
-  font-size: 3rem;
+  font-size: clamp(2.5rem, 3vw, 3rem);
   color: rgba(126, 126, 190, 1);
   margin: 0 0 0.5rem 0;
   font-weight: 700;
@@ -36,11 +36,41 @@
 .header p {
   font-size: 1rem;
   font-weight: 300;
-  width: min(80vw, 560px);
+  width: min(90vw, 560px);
   color: rgba(126, 126, 190, 1);
   margin: 0;
   text-align: center;
   background-color: transparent;
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 60px;
+  border: 1px solid #B4B4E2;
+  color: rgba(126, 126, 190, 1);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.download-button:hover {
+  background: rgba(151, 151, 232, 0.2);
+}
+
+.download-button:active {
+  transform: scale(0.95);
+}
+
+.download-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .canvas {
@@ -119,9 +149,9 @@
   will-change: opacity;
 }
 
-.stamp-placeholder.animate {
+/* .stamp-placeholder.animate {
   animation: stamp-fade 0.35s ease;
-}
+} */
 
 @keyframes stamp-fade {
   from {
@@ -182,23 +212,23 @@
 .text-label.selected {
   border-radius: 10px;
   border: 1px dashed rgba(126, 126, 190, 1);
-  box-shadow: 2px 2px 8px rgba(126, 126, 190, 0.15);
 }
 
 .text-input {
   border: none;
   outline: none;
-  width: auto;
+  /* width: auto; */
   min-width: 1ch;
   background: transparent;
+  /* padding: 10px; */
   font-size: var(--text-label-font-size);
+  /* box-shadow: 2px 2px 8px rgba(126, 126, 190, 0.15) inset;
+  border: 1px solid rgba(126, 126, 190, 1); */
   text-align: center;
   display: inline-block;
   line-height: 1.2;
   overflow: visible;
   box-sizing: content-box;
-  padding: 0;
-  margin: 0;
   font-family: inherit;
 }
 

@@ -122,6 +122,7 @@ const stickerOptions: StickerOption[] = [
 
 function PostcardEditor() {
   // TODO: have only one state for all widgets, and use itemType to distinguish;
+  //   `stamp` should just become a non-draggable, non-selectable widget with fixed position from the start;
   //   `addTextLabel` & `addMark` should also be merged into a single function;
   //   `handleTextMouseDown` & `handleMarkMouseDown` should also be merged into a single function;
   const [textLabels, setTextLabels] = useState<TextLabel[]>([])

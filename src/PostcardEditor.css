@@ -79,7 +79,6 @@
 
 .canvas {
   position: relative;
-  flex: 1;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -88,9 +87,6 @@
   margin-bottom: 2rem;
   cursor: default;
   user-select: none;
-  /* background-color: aqua; */
-  
-
 }
 
 .postcard-border {
@@ -271,9 +267,9 @@
 }
 
 .toolbar-container {
+  position: fixed;
   display: flex;
   flex-direction: column;
-  position:fixed;
   bottom: 0;
   align-self: center;
   z-index: 1000;

@@ -29,6 +29,7 @@ html,body {
   min-height: 100vh;
   width: 100%;
   font-family: 'Unbounded', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #3B3B50;
 }
 
 h1 {
@@ -51,9 +52,3 @@ button:focus-visible {
   outline: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #3B3B50;
-    background-color: #ffffff;
-  }
-}
